@@ -1,0 +1,32 @@
+package cmd
+
+import (
+	"fmt"
+
+	"github.com/spf13/cobra"
+)
+
+// renderCmd represents the render command
+var renderCmd = &cobra.Command{
+	Use:   "render",
+	Short: "Print job file to standard out",
+	Long: `The render command allows you to incorporate the d2n application
+	in pipeline-driven workflow.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Println("render called")
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(renderCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// renderCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// renderCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+}
