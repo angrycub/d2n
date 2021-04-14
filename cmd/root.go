@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/angrycub/d2n/helper"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -11,6 +12,7 @@ import (
 )
 
 var cfgFile string
+var jobConfig *helper.Config = helper.NewConfig()
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{

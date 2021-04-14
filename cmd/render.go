@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/angrycub/d2n/helper"
 	"github.com/spf13/cobra"
 )
 
@@ -11,22 +13,25 @@ var renderCmd = &cobra.Command{
 	Use:   "render",
 	Short: "Print job file to standard out",
 	Long: `The render command allows you to incorporate the d2n application
-	in pipeline-driven workflow.`,
+in pipeline-driven workflow.
+
+USAGE: d2n render [options] NAME IMAGE [command] [args]
+	`,
+	Args: cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("render called")
+		jobConfig.ParseArguments(args)
+
+		out, err := jobConfig.RenderJob()
+		if err != nil {
+			fmt.Println(err.Error())
+			os.Exit(1)
+		}
+
+		fmt.Println(out)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(renderCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// renderCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// renderCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	helper.AddSharedDockerFlags(renderCmd, jobConfig)
 }
